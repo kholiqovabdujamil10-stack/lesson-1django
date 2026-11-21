@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+
+<div class="profile-container">
+    <div class="profile-card card shadow p-4 text-center">
+        <div class="card-body">
+
+            <div class="profile-avatar">
+                <span>✦</span>
+            </div>
+
+            <h2 class="mb-2">My Profile</h2>
+            <p class="profile-subtitle">Welcome to your cosmic account</p>
+
+            <div class="profile-info mb-3">
+                <div class="profile-icon">👨‍🚀</div>
+                <div>
+                    <h5>Username</h5>
+                    <p>{{ request.user.username }}</p>
+                </div>
+            </div>
+
+            <div class="profile-info mb-3">
+                <div class="profile-icon">✉</div>
+                <div>
+                    <h5>Email</h5>
+                    <p>{{ request.user.email|default:"Not provided" }}</p>
+                </div>
+            </div>
+
+            <div class="profile-buttons">
+                <a href="{% url 'my_tickets' %}" class="btn btn-primary mt-3">
+                    ✦ My Tickets
+                </a>
+
+                <a href="{% url 'games' %}" class="btn btn-success mt-3">
+                    🚀 View Games
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Buy Ticket{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+
+        <div class="card shadow p-4">
+
+            <h2 class="text-center mb-4">Buy Tickets</h2>
+
+            <div class="text-center mb-4">
+                <h4>{{ game.home_team.name }} VS {{ game.away_team.name }}</h4>
+                <p>{{ game.sport.name }}</p>
+                <p>{{ game.date|date:"d.m.Y H:i" }}</p>
+                <p>{{ game.stadium }}</p>
+                <h5 class="text-success">Price: {{ game.ticket_price }}</h5>
+                <p>Available Tickets: {{ game.available_tickets }}</p>
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" name="quantity" class="form-control" min="1" max="{{ game.available_tickets }}"
+                        required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">
+                    Confirm Purchase
+                </button>
+
+                <a href="{% url 'games' %}" class="btn btn-secondary w-100 mt-2">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

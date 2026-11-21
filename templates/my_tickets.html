@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}My Tickets{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">My Tickets</h2>
+
+<div class="row g-4">
+
+    {% for ticket in tickets %}
+    <div class="col-md-6 col-lg-4">
+
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+
+                <h5 class="text-center">
+                    {{ ticket.game.home_team.name }}
+                    VS
+                    {{ ticket.game.away_team.name }}
+                </h5>
+
+                <hr>
+
+                <p><strong>Sport:</strong> {{ ticket.game.sport.name }}</p>
+                <p><strong>Date:</strong> {{ ticket.game.date|date:"d.m.Y H:i" }}</p>
+                <p><strong>Stadium:</strong> {{ ticket.game.stadium }}</p>
+                <p><strong>Quantity:</strong> {{ ticket.quantity }}</p>
+                <p><strong>Total Price:</strong> {{ ticket.price }}</p>
+
+                <p>
+                    <strong>Status:</strong>
+                    {% if ticket.status == 'paid' %}
+                    <span class="badge bg-success">Paid</span>
+                    {% else %}
+                    <span class="badge bg-danger">Cancelled</span>
+                    {% endif %}
+                </p>
+
+                {% if ticket.status == 'paid' %}
+                <a href="{% url 'cancel_ticket' ticket.id %}" class="btn btn-danger w-100">
+                    Cancel Ticket
+                </a>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+    {% empty %}
+    <p>You haven't purchased any tickets yet.</p>
+    {% endfor %}
+
+</div>
+{% endblock %}

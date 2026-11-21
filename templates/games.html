@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}All Games{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>All Games</h2>
+    <a href="{% url 'create_game' %}" class="btn btn-primary">Create Game</a>
+</div>
+
+<div class="row g-4">
+
+    {% for game in games %}
+    <div class="col-md-6 col-lg-4">
+
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+                <span class="badge bg-primary">{{ game.sport.name }}</span>
+
+                <h5 class="mt-3">{{ game.home_team.name }}</h5>
+                <h4 class="text-primary">VS</h4>
+                <h5>{{ game.away_team.name }}</h5>
+
+                <hr>
+
+                <p><strong>Date:</strong> {{ game.date|date:"d.m.Y H:i" }}</p>
+                <p><strong>Stadium:</strong> {{ game.stadium }}</p>
+                <p><strong>Price:</strong> {{ game.ticket_price }}</p>
+                <p><strong>Available Tickets:</strong> {{ game.available_tickets }}</p>
+                <p><strong>Status:</strong> {{ game.get_status_display }}</p>
+
+                <a href="{% url 'buy_ticket' game.id %}" class="btn btn-success mb-2">Buy Ticket</a>
+
+                {% if game.created_by == request.user %}
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="{% url 'edit_game' game.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'delete_game' game.id %}" class="btn btn-danger">Delete</a>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+    {% empty %}
+    <p>No games available.</p>
+    {% endfor %}
+
+</div>
+{% endblock %}
